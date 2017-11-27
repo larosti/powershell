@@ -1,0 +1,20 @@
+
+
+$Log = "C:\PerfLogs\log.txt"
+#Папка с которой нужно копировать
+$sourse = "C:\Folder_A"
+#Папка куда нужно копировать
+$dest = "C:\Folder_B"
+#
+$Name_sourse = (Get-ChildItem $sourse).Name
+$Name_dest = (Get-ChildItem $dest).Name
+$Compare = $Name_sourse | where {$Name_dest -notcontains $PSItem}
+
+foreach ($CopyFiles in $Compare)
+{
+$Data1 = Get-Date -format G
+Write-Host -ForegroundColor Green "Start Copy $sourse\$CopyFiles - $Data1"
+Copy-Item $sourse\$CopyFiles -Destination $dest -Recurse -Force
+$Data2 = Get-Date -format G
+Write-Host -ForegroundColor Green "End Copy $sourse\$CopyFiles - $Data2"
+} 
