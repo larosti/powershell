@@ -1,5 +1,12 @@
 
 
+$smtpServer = "aspmx.l.google.com"
+$smtpFrom = "volodymyr.bilyi@labstech.com"
+$smtpTo = "volodymyr.bilyi@labstech.com"
+    $messageSubject = "Report test HTML"
+    $encoding = [System.Text.Encoding]::UTF8
+$Body = "Testtttt"
+
 $Log = "C:\PerfLogs\log.txt"
 #Папка с которой нужно копировать
 $sourse = "C:\Folder_A"
@@ -13,8 +20,12 @@ $Compare = $Name_sourse | where {$Name_dest -notcontains $PSItem}
 foreach ($CopyFiles in $Compare)
 {
 $Data1 = Get-Date -format G
+"bla-bla-bla1"
 Write-Host -ForegroundColor Green "Start Copy $sourse\$CopyFiles - $Data1"
 Copy-Item $sourse\$CopyFiles -Destination $dest -Recurse -Force
 $Data2 = Get-Date -format G
 Write-Host -ForegroundColor Green "End Copy $sourse\$CopyFiles - $Data2"
-} 
+}
+Get-ChildItem
+Write-Host -BackgroundColor DarkGreen "Sending Report to VB-mail"
+Send-MailMessage -From $smtpFrom -To $smtpTo -Subject $messageSubject -Body $Body -SmtpServer $smtpServer -Encoding $encoding -UseSsl
